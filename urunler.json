@@ -1,0 +1,22 @@
+[
+  {
+    "Ad": "Laptop",
+    "Fiyat": 15000.0,
+    "Stok": 5
+  },
+  {
+    "Ad": "Mouse",
+    "Fiyat": 250.0,
+    "Stok": 20
+  },
+  {
+    "Ad": "Minecraft",
+    "Fiyat": 200.0,
+    "Stok": 999
+  },
+  {
+    "Ad": "Photoshop",
+    "Fiyat": 1200.0,
+    "Stok": 999
+  }
+]
