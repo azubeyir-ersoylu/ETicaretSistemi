@@ -1,6 +1,6 @@
 public class DijitalUrun : Product
 {
-    private string _indirmeLinki;
+    private string _indirmeLinki = "";
 
     public DijitalUrun(string ad, double fiyat, int stok, string indirmeLinki)
         : base(ad, fiyat, stok)

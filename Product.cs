@@ -1,21 +1,27 @@
 public class Product
 {
-    private string _ad;
+    private string _ad = "";
     private double _fiyat;
     private int _stok;
-    private int _id;
 
     public Product(string ad, double fiyat, int stok)
     {
-        _ad = ad;
-        _fiyat = fiyat;
-        _stok = stok;
+        // Alanlara (_fiyat) doğrudan değil, özellikler (Fiyat) üzerinden
+        // atıyoruz ki set içindeki kontroller kurucuda da çalışsın.
+        Ad = ad;
+        Fiyat = fiyat;
+        Stok = stok;
     }
 
     public string Ad
     {
         get { return _ad; }
-        set { _ad = value; }
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Ürün adı boş olamaz!");
+            _ad = value;
+        }
     }
 
     public double Fiyat
@@ -24,7 +30,7 @@ public class Product
         set
         {
             if (value < 0)
-                throw new Exception("Fiyat negatif olamaz!");
+                throw new ArgumentException("Fiyat negatif olamaz!");
             _fiyat = value;
         }
     }
@@ -32,7 +38,12 @@ public class Product
     public int Stok
     {
         get { return _stok; }
-        set { _stok = value; }
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Stok negatif olamaz!");
+            _stok = value;
+        }
     }
 
     public virtual string BilgileriGoster()

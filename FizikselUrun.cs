@@ -5,13 +5,18 @@ public class FizikselUrun : Product
     public FizikselUrun(string ad, double fiyat, int stok, double kargoAgirligi)
         : base(ad, fiyat, stok)
     {
-        _kargoAgirligi = kargoAgirligi;
+        KargoAgirligi = kargoAgirligi;
     }
 
     public double KargoAgirligi
     {
         get { return _kargoAgirligi; }
-        set { _kargoAgirligi = value; }
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Kargo ağırlığı negatif olamaz!");
+            _kargoAgirligi = value;
+        }
     }
 
     public override string BilgileriGoster()
