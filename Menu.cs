@@ -115,10 +115,18 @@ else if (secim == "11")
         string ad = Console.ReadLine();
 
         Console.Write("Fiyat: ");
-        double fiyat = double.Parse(Console.ReadLine());
+        double fiyat;
+        while (!double.TryParse(Console.ReadLine(), out fiyat))
+        {
+            Console.Write("Geçersiz fiyat! Lütfen bir sayı girin: ");
+        }
 
         Console.Write("Stok: ");
-        int stok = int.Parse(Console.ReadLine());
+        int stok;
+        while(!int.TryParse(Console.ReadLine(),out stok))
+        {
+            Console.WriteLine("geçersiz stok! Lütfen tam sayı girin:");
+        }
 
         Console.Write("Fiziksel mi Dijital mi? (f/d): ");
         string tip = Console.ReadLine();
