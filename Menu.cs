@@ -183,14 +183,14 @@ public class Menu
 
     private void UrunAra()
     {
-        string kelime = Girdi.Metin("Aranacak kelime: ").ToLower();
+        string kelime = Girdi.Metin("Aranacak kelime: ");
 
         Console.WriteLine("\n=== ARAMA SONUÇLARI ===");
         bool bulundu = false;
 
         foreach (Product urun in _urunler)
         {
-            if (urun.Ad.ToLower().Contains(kelime))
+            if (urun.Ad.Contains(kelime, StringComparison.InvariantCultureIgnoreCase))
             {
                 Console.WriteLine("- " + urun.Ad + " : " + Para.Yaz(urun.Fiyat) + " (Stok: " + urun.Stok + ")");
                 bulundu = true;
@@ -203,7 +203,9 @@ public class Menu
 
     private void KuponKullan()
     {
-        string kod = Girdi.Metin("Kupon kodunuz: ").ToUpper();
+        // ToUpper() Türkçe ayarlı bilgisayarda "i" harfini "İ" yapar ve
+        // "indirim10" kodu "İNDİRİM10" olur. ToUpperInvariant() dilden bağımsızdır.
+        string kod = Girdi.Metin("Kupon kodunuz: ").ToUpperInvariant();
 
         Kupon? bulunanKupon = null;
         foreach (Kupon k in _kuponlar)
