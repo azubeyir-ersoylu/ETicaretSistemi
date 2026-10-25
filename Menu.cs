@@ -235,7 +235,9 @@ public class Menu
 
     private void SiparisVer()
     {
-        if (_sepet.ToplamFiyat() == 0)
+        // Fiyata değil ürün sayısına bakıyoruz: 0₺'lik bir ürün veya
+        // %100 kupon olsa bile sepet boş sayılmamalı.
+        if (_sepet.Urunler().Count == 0)
         {
             Console.WriteLine("Sepetiniz boş!");
             return;
@@ -257,7 +259,7 @@ public class Menu
         }
         _sepet.Kupon?.Kullan();
 
-        Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.ToplamFiyat());
+        Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.Indirim(), _sepet.ToplamFiyat());
         _siparisler.Add(siparis);
         siparis.SiparisiGoster();
         Console.WriteLine("Siparişiniz alındı!");
