@@ -1,10 +1,10 @@
 public class Product
 {
     private string _ad = "";
-    private double _fiyat;
+    private decimal _fiyat;
     private int _stok;
 
-    public Product(string ad, double fiyat, int stok)
+    public Product(string ad, decimal fiyat, int stok)
     {
         // Alanlara (_fiyat) doğrudan değil, özellikler (Fiyat) üzerinden
         // atıyoruz ki set içindeki kontroller kurucuda da çalışsın.
@@ -24,7 +24,7 @@ public class Product
         }
     }
 
-    public double Fiyat
+    public decimal Fiyat
     {
         get { return _fiyat; }
         set

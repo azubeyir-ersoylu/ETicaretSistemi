@@ -1,14 +1,14 @@
 public class FizikselUrun : Product
 {
-    private double _kargoAgirligi;
+    private decimal _kargoAgirligi;
 
-    public FizikselUrun(string ad, double fiyat, int stok, double kargoAgirligi)
+    public FizikselUrun(string ad, decimal fiyat, int stok, decimal kargoAgirligi)
         : base(ad, fiyat, stok)
     {
         KargoAgirligi = kargoAgirligi;
     }
 
-    public double KargoAgirligi
+    public decimal KargoAgirligi
     {
         get { return _kargoAgirligi; }
         set

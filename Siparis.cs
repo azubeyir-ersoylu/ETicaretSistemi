@@ -2,10 +2,10 @@ public class Siparis
 {
     private int _siparisNo;
     private List<Product> _urunler;
-    private double _toplam;
+    private decimal _toplam;
     private string _tarih;
 
-    public Siparis(int siparisNo, List<Product> urunler, double toplam)
+    public Siparis(int siparisNo, List<Product> urunler, decimal toplam)
     {
         _siparisNo = siparisNo;
         _urunler = new List<Product>(urunler);

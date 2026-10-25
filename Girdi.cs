@@ -21,11 +21,11 @@ public static class Girdi
         }
     }
 
-    public static double Sayi(string soru, double enAz = 0)
+    public static decimal Sayi(string soru, decimal enAz = 0)
     {
         while (true)
         {
-            double? sayi = SayiyaCevir(Metin(soru));
+            decimal? sayi = SayiyaCevir(Metin(soru));
             if (sayi != null && sayi >= enAz)
                 return sayi.Value;
 
@@ -34,7 +34,7 @@ public static class Girdi
     }
 
     // Boş bırakılırsa null döner ("değiştirme" anlamında kullanılır).
-    public static double? SayiVeyaBos(string soru, double enAz = 0)
+    public static decimal? SayiVeyaBos(string soru, decimal enAz = 0)
     {
         while (true)
         {
@@ -42,7 +42,7 @@ public static class Girdi
             if (metin == "")
                 return null;
 
-            double? sayi = SayiyaCevir(metin);
+            decimal? sayi = SayiyaCevir(metin);
             if (sayi != null && sayi >= enAz)
                 return sayi;
 
@@ -66,9 +66,9 @@ public static class Girdi
 
     // Hem "12,5" hem "12.5" kabul edilsin diye virgülü noktaya çevirip
     // bilgisayarın dil ayarından bağımsız (InvariantCulture) okuyoruz.
-    private static double? SayiyaCevir(string metin)
+    private static decimal? SayiyaCevir(string metin)
     {
-        if (double.TryParse(metin.Replace(',', '.'), NumberStyles.Float, CultureInfo.InvariantCulture, out double sayi))
+        if (decimal.TryParse(metin.Replace(',', '.'), NumberStyles.Number, CultureInfo.InvariantCulture, out decimal sayi))
             return sayi;
         return null;
     }

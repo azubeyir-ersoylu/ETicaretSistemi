@@ -25,8 +25,8 @@ public class Menu
 
     private void UrunleriDoldur()
     {
-        _urunler.Add(new FizikselUrun("Laptop", 15000, 5, 2.5));
-        _urunler.Add(new FizikselUrun("Mouse", 250, 20, 0.3));
+        _urunler.Add(new FizikselUrun("Laptop", 15000, 5, 2.5m));
+        _urunler.Add(new FizikselUrun("Mouse", 250, 20, 0.3m));
         _urunler.Add(new DijitalUrun("Minecraft", 200, 999, "minecraft.com/indir"));
         _urunler.Add(new DijitalUrun("Photoshop", 1200, 999, "adobe.com/indir"));
     }
@@ -124,7 +124,7 @@ public class Menu
     private void UrunEkle()
     {
         string ad = Girdi.Metin("Ürün adı: ");
-        double fiyat = Girdi.Sayi("Fiyat: ");
+        decimal fiyat = Girdi.Sayi("Fiyat: ");
         int stok = Girdi.TamSayi("Stok: ", 0);
 
         // Eskiden "f" dışındaki her cevap (örneğin "fiziksel") dijital
@@ -135,7 +135,7 @@ public class Menu
 
             if (tip == "f" || tip == "fiziksel")
             {
-                double agirlik = Girdi.Sayi("Kargo ağırlığı (kg): ");
+                decimal agirlik = Girdi.Sayi("Kargo ağırlığı (kg): ");
                 _urunler.Add(new FizikselUrun(ad, fiyat, stok, agirlik));
                 break;
             }
@@ -172,7 +172,7 @@ public class Menu
         if (yeniAd != "")
             urun.Ad = yeniAd;
 
-        double? yeniFiyat = Girdi.SayiVeyaBos("Yeni fiyat (boş bırakırsan değişmez): ");
+        decimal? yeniFiyat = Girdi.SayiVeyaBos("Yeni fiyat (boş bırakırsan değişmez): ");
         if (yeniFiyat != null)
             urun.Fiyat = yeniFiyat.Value;
 
@@ -221,7 +221,7 @@ public class Menu
 
         try
         {
-            double yeniToplam = bulunanKupon.IndirimUygula(_sepet.ToplamFiyat());
+            decimal yeniToplam = bulunanKupon.IndirimUygula(_sepet.ToplamFiyat());
             Console.WriteLine("%" + bulunanKupon.IndirimYuzdesi + " indirim uygulandı!");
             Console.WriteLine("Yeni toplam: " + yeniToplam + "₺");
         }

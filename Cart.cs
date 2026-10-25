@@ -23,9 +23,9 @@ public class Cart
         Console.WriteLine(urun.Ad + " sepetten çıkarıldı!");
     }
 
-    public double ToplamFiyat()
+    public decimal ToplamFiyat()
     {
-        double toplam = 0;
+        decimal toplam = 0;
         foreach (Product urun in _urunler)
         {
             toplam += urun.Fiyat;
