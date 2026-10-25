@@ -21,6 +21,6 @@ public class FizikselUrun : Product
 
     public override string BilgileriGoster()
     {
-        return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Kargo Ağırlığı: " + KargoAgirligi + "kg";
+        return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Stok: " + Stok + " | Kargo: " + KargoAgirligi + " kg";
     }
 }

@@ -84,7 +84,9 @@ public class Menu
         Console.WriteLine("\n=== ÜRÜNLER ===");
         for (int i = 0; i < _urunler.Count; i++)
         {
-            Console.WriteLine((i + 1) + ". " + _urunler[i].Ad + " - " + _urunler[i].Fiyat + "₺");
+            // BilgileriGoster virtual olduğu için her ürün kendi türüne göre
+            // (fiziksel/dijital) bilgisini yazar: polimorfizm.
+            Console.WriteLine((i + 1) + ". " + _urunler[i].BilgileriGoster());
         }
     }
 
