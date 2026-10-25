@@ -8,14 +8,14 @@ public class Cart
     }
 
     public void UrunEkle(Product urun)
-{
-    if (urun.Stok <= 0)
-        throw new Exception(urun.Ad + " stokta yok!");
-    
-    _urunler.Add(urun);
-    urun.Stok--;
-    Console.WriteLine(urun.Ad + " sepete eklendi! (Kalan stok: " + urun.Stok + ")");
-}
+    {
+        if (urun.Stok <= 0)
+            throw new Exception(urun.Ad + " stokta yok!");
+
+        _urunler.Add(urun);
+        urun.Stok--;
+        Console.WriteLine(urun.Ad + " sepete eklendi! (Kalan stok: " + urun.Stok + ")");
+    }
 
     public void UrunCikar(Product urun)
     {
@@ -42,14 +42,15 @@ public class Cart
         }
         Console.WriteLine("Toplam: " + ToplamFiyat() + "₺");
     }
-    public List<Product> Urunler()
-{
-    return _urunler;
-}
 
-public void SepetiTemizle()
-{
-    _urunler.Clear();
-    Console.WriteLine("Sepet temizlendi!");
-}
+    public List<Product> Urunler()
+    {
+        return _urunler;
+    }
+
+    public void SepetiTemizle()
+    {
+        _urunler.Clear();
+        Console.WriteLine("Sepet temizlendi!");
+    }
 }

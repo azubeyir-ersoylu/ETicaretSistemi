@@ -34,8 +34,9 @@ public class Product
         get { return _stok; }
         set { _stok = value; }
     }
+
     public virtual string BilgileriGoster()
-{
-    return "Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Stok: " + Stok;
-}
+    {
+        return "Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Stok: " + Stok;
+    }
 }

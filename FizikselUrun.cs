@@ -13,8 +13,9 @@ public class FizikselUrun : Product
         get { return _kargoAgirligi; }
         set { _kargoAgirligi = value; }
     }
+
     public override string BilgileriGoster()
-{
-    return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Kargo Ağırlığı: " + KargoAgirligi + "kg";
-}
+    {
+        return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Kargo Ağırlığı: " + KargoAgirligi + "kg";
+    }
 }

@@ -5,7 +5,8 @@ public class Menu
     private VeriYonetici _veriYonetici;
     private List<Kupon> _kuponlar;
     private List<Siparis> _siparisler;
-private int _siparisNo;
+    private int _siparisNo;
+
     public Menu()
     {
         _urunler = new List<Product>();
@@ -17,7 +18,7 @@ private int _siparisNo;
         _kuponlar.Add(new Kupon("INDIRIM20", 20));
         _kuponlar.Add(new Kupon("HOSGELDIN", 15));
         _siparisler = new List<Siparis>();
-_siparisNo = 1;
+        _siparisNo = 1;
         if (_urunler.Count == 0)
             UrunleriDoldur();
     }
@@ -44,9 +45,9 @@ _siparisNo = 1;
             Console.WriteLine("7. Ürün Ara");
             Console.WriteLine("8. Kupon Kullan");
             Console.WriteLine("9. Sipariş Ver");
-Console.WriteLine("10. Sipariş Geçmişi");
-Console.WriteLine("11. Çıkış");
-           
+            Console.WriteLine("10. Sipariş Geçmişi");
+            Console.WriteLine("11. Çıkış");
+
             Console.Write("Seçiminiz: ");
 
             string secim = Console.ReadLine();
@@ -60,13 +61,12 @@ Console.WriteLine("11. Çıkış");
             else if (secim == "7") UrunAra();
             else if (secim == "8") KuponKullan();
             else if (secim == "9") SiparisVer();
-else if (secim == "10") SiparisGecmisiniGoster();
-else if (secim == "11")
-{
-    _veriYonetici.UrunleriKaydet(_urunler);
-    break;
-}
-          
+            else if (secim == "10") SiparisGecmisiniGoster();
+            else if (secim == "11")
+            {
+                _veriYonetici.UrunleriKaydet(_urunler);
+                break;
+            }
             else Console.WriteLine("Geçersiz seçim!");
         }
     }
@@ -123,7 +123,7 @@ else if (secim == "11")
 
         Console.Write("Stok: ");
         int stok;
-        while(!int.TryParse(Console.ReadLine(),out stok))
+        while (!int.TryParse(Console.ReadLine(), out stok))
         {
             Console.WriteLine("geçersiz stok! Lütfen tam sayı girin:");
         }
@@ -257,33 +257,34 @@ else if (secim == "11")
             Console.WriteLine("Hata: " + ex.Message);
         }
     }
+
     private void SiparisVer()
-{
-    if (_sepet.ToplamFiyat() == 0)
     {
-        Console.WriteLine("Sepetiniz boş!");
-        return;
+        if (_sepet.ToplamFiyat() == 0)
+        {
+            Console.WriteLine("Sepetiniz boş!");
+            return;
+        }
+
+        Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.ToplamFiyat());
+        _siparisler.Add(siparis);
+        siparis.SiparisiGoster();
+        Console.WriteLine("Siparişiniz alındı!");
+        _sepet.SepetiTemizle();
     }
 
-    Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.ToplamFiyat());
-    _siparisler.Add(siparis);
-    siparis.SiparisiGoster();
-    Console.WriteLine("Siparişiniz alındı!");
-    _sepet.SepetiTemizle();
-}
-
-private void SiparisGecmisiniGoster()
-{
-    if (_siparisler.Count == 0)
+    private void SiparisGecmisiniGoster()
     {
-        Console.WriteLine("Henüz sipariş vermediniz!");
-        return;
-    }
+        if (_siparisler.Count == 0)
+        {
+            Console.WriteLine("Henüz sipariş vermediniz!");
+            return;
+        }
 
-    Console.WriteLine("\n=== SİPARİŞ GEÇMİŞİ ===");
-    foreach (Siparis s in _siparisler)
-    {
-        s.SiparisiGoster();
+        Console.WriteLine("\n=== SİPARİŞ GEÇMİŞİ ===");
+        foreach (Siparis s in _siparisler)
+        {
+            s.SiparisiGoster();
+        }
     }
-}
 }

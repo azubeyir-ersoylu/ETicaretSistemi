@@ -13,8 +13,9 @@ public class DijitalUrun : Product
         get { return _indirmeLinki; }
         set { _indirmeLinki = value; }
     }
+
     public override string BilgileriGoster()
-{
-    return "Dijital Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | İndirme: " + IndirmeLinki;
-}
+    {
+        return "Dijital Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | İndirme: " + IndirmeLinki;
+    }
 }
