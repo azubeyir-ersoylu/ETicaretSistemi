@@ -1,6 +1,7 @@
 public class Cart
 {
     private List<Product> _urunler;
+    private Kupon? _kupon;
 
     public Cart()
     {
@@ -36,7 +37,21 @@ public class Cart
         Console.WriteLine(urun.Ad + " sepetten çıkarıldı!");
     }
 
-    public decimal ToplamFiyat()
+    public Kupon? Kupon
+    {
+        get { return _kupon; }
+    }
+
+    public void KuponUygula(Kupon kupon)
+    {
+        if (_urunler.Count == 0)
+            throw new InvalidOperationException("Kupon kullanmak için önce sepete ürün ekleyin!");
+        if (kupon.Kullanildi)
+            throw new InvalidOperationException("Bu kupon daha önce kullanıldı!");
+        _kupon = kupon;
+    }
+
+    public decimal AraToplam()
     {
         decimal toplam = 0;
         foreach (Product urun in _urunler)
@@ -46,12 +61,35 @@ public class Cart
         return toplam;
     }
 
+    public decimal Indirim()
+    {
+        if (_kupon == null)
+            return 0;
+        return _kupon.IndirimHesapla(AraToplam());
+    }
+
+    public decimal ToplamFiyat()
+    {
+        return AraToplam() - Indirim();
+    }
+
     public void SepetiGoster()
     {
         Console.WriteLine("=== SEPETİNİZ ===");
+        if (_urunler.Count == 0)
+        {
+            Console.WriteLine("Sepetiniz boş!");
+            return;
+        }
+
         foreach (Product urun in _urunler)
         {
             Console.WriteLine("- " + urun.Ad + " : " + urun.Fiyat + "₺");
+        }
+        if (_kupon != null)
+        {
+            Console.WriteLine("Ara toplam: " + AraToplam() + "₺");
+            Console.WriteLine("Kupon " + _kupon.Kod + " (%" + _kupon.IndirimYuzdesi + "): -" + Indirim() + "₺");
         }
         Console.WriteLine("Toplam: " + ToplamFiyat() + "₺");
     }
@@ -64,6 +102,7 @@ public class Cart
     public void SepetiTemizle()
     {
         _urunler.Clear();
+        _kupon = null;
         Console.WriteLine("Sepet temizlendi!");
     }
 }

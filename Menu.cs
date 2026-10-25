@@ -219,11 +219,13 @@ public class Menu
             return;
         }
 
+        // Eskiden indirim sadece ekrana yazılıyor, siparişe yansımıyordu;
+        // üstelik kupon boşa harcanıyordu. Artık kupon sepete bağlanıyor.
         try
         {
-            decimal yeniToplam = bulunanKupon.IndirimUygula(_sepet.ToplamFiyat());
+            _sepet.KuponUygula(bulunanKupon);
             Console.WriteLine("%" + bulunanKupon.IndirimYuzdesi + " indirim uygulandı!");
-            Console.WriteLine("Yeni toplam: " + yeniToplam + "₺");
+            Console.WriteLine("Yeni toplam: " + _sepet.ToplamFiyat() + "₺");
         }
         catch (Exception ex)
         {
@@ -253,6 +255,7 @@ public class Menu
         {
             urun.Stok--;
         }
+        _sepet.Kupon?.Kullan();
 
         Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.ToplamFiyat());
         _siparisler.Add(siparis);

@@ -26,13 +26,16 @@ public class Kupon
         get { return _kullanildi; }
     }
 
-    public decimal IndirimUygula(decimal tutar)
+    // Sadece hesaplar, kuponu harcamaz. Kupon sipariş verilince harcanır.
+    public decimal IndirimHesapla(decimal tutar)
+    {
+        return Math.Round(tutar * _indirimYuzdesi / 100, 2);
+    }
+
+    public void Kullan()
     {
         if (_kullanildi)
-            throw new Exception("Bu kupon daha önce kullanıldı!");
-
+            throw new InvalidOperationException("Bu kupon daha önce kullanıldı!");
         _kullanildi = true;
-        decimal indirim = tutar * _indirimYuzdesi / 100;
-        return tutar - indirim;
     }
 }
