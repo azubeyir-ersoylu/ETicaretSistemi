@@ -48,9 +48,17 @@ public class Menu
             Console.WriteLine("10. Sipariş Geçmişi");
             Console.WriteLine("11. Çıkış");
 
-            Console.Write("Seçiminiz: ");
-
-            string secim = Console.ReadLine();
+            string secim;
+            try
+            {
+                secim = Girdi.Metin("Seçiminiz: ");
+            }
+            catch (EndOfStreamException)
+            {
+                // Girdi kapandıysa (örneğin Ctrl+Z) kaydedip düzgünce çık.
+                _veriYonetici.UrunleriKaydet(_urunler);
+                break;
+            }
 
             if (secim == "1") UrunleriListele();
             else if (secim == "2") SepeteEkle();
@@ -80,28 +88,32 @@ public class Menu
         }
     }
 
-    private void SepeteEkle()
+    // Listeden bir ürün seçtirir. Liste boşsa ya da kullanıcı 0 ile
+    // vazgeçerse null döner.
+    private Product? UrunSec(string soru)
     {
         UrunleriListele();
-        Console.Write("Eklemek istediğiniz ürün numarası: ");
-        string input = Console.ReadLine();
-        int numara;
+        if (_urunler.Count == 0)
+        {
+            Console.WriteLine("Henüz hiç ürün yok!");
+            return null;
+        }
+
+        int numara = Girdi.TamSayi(soru + " (0 = vazgeç): ", 0, _urunler.Count);
+        if (numara == 0)
+            return null;
+        return _urunler[numara - 1];
+    }
+
+    private void SepeteEkle()
+    {
+        Product? urun = UrunSec("Eklemek istediğiniz ürün numarası");
+        if (urun == null)
+            return;
 
         try
         {
-            numara = int.Parse(input);
-            if (numara >= 1 && numara <= _urunler.Count)
-            {
-                _sepet.UrunEkle(_urunler[numara - 1]);
-            }
-            else
-            {
-                Console.WriteLine("Geçersiz numara!");
-            }
-        }
-        catch (FormatException)
-        {
-            Console.WriteLine("Hata: Lütfen bir sayı girin!");
+            _sepet.UrunEkle(urun);
         }
         catch (Exception ex)
         {
@@ -111,37 +123,30 @@ public class Menu
 
     private void UrunEkle()
     {
-        Console.Write("Ürün adı: ");
-        string ad = Console.ReadLine();
+        string ad = Girdi.Metin("Ürün adı: ");
+        double fiyat = Girdi.Sayi("Fiyat: ");
+        int stok = Girdi.TamSayi("Stok: ", 0);
 
-        Console.Write("Fiyat: ");
-        double fiyat;
-        while (!double.TryParse(Console.ReadLine(), out fiyat))
+        // Eskiden "f" dışındaki her cevap (örneğin "fiziksel") dijital
+        // sayılıyordu. Artık geçerli bir cevap gelene kadar tekrar soruyoruz.
+        while (true)
         {
-            Console.Write("Geçersiz fiyat! Lütfen bir sayı girin: ");
-        }
+            string tip = Girdi.Metin("Fiziksel mi Dijital mi? (f/d): ").ToLower();
 
-        Console.Write("Stok: ");
-        int stok;
-        while (!int.TryParse(Console.ReadLine(), out stok))
-        {
-            Console.WriteLine("geçersiz stok! Lütfen tam sayı girin:");
-        }
+            if (tip == "f" || tip == "fiziksel")
+            {
+                double agirlik = Girdi.Sayi("Kargo ağırlığı (kg): ");
+                _urunler.Add(new FizikselUrun(ad, fiyat, stok, agirlik));
+                break;
+            }
+            if (tip == "d" || tip == "dijital")
+            {
+                string link = Girdi.Metin("İndirme linki: ");
+                _urunler.Add(new DijitalUrun(ad, fiyat, stok, link));
+                break;
+            }
 
-        Console.Write("Fiziksel mi Dijital mi? (f/d): ");
-        string tip = Console.ReadLine();
-
-        if (tip == "f")
-        {
-            Console.Write("Kargo ağırlığı (kg): ");
-            double agirlik = double.Parse(Console.ReadLine());
-            _urunler.Add(new FizikselUrun(ad, fiyat, stok, agirlik));
-        }
-        else
-        {
-            Console.Write("İndirme linki: ");
-            string link = Console.ReadLine();
-            _urunler.Add(new DijitalUrun(ad, fiyat, stok, link));
+            Console.WriteLine("Lütfen 'f' (fiziksel) veya 'd' (dijital) yazın.");
         }
 
         Console.WriteLine("Ürün eklendi!");
@@ -149,65 +154,34 @@ public class Menu
 
     private void UrunSil()
     {
-        UrunleriListele();
-        Console.Write("Silmek istediğiniz ürün numarası: ");
+        Product? urun = UrunSec("Silmek istediğiniz ürün numarası");
+        if (urun == null)
+            return;
 
-        try
-        {
-            int numara = int.Parse(Console.ReadLine());
-            if (numara >= 1 && numara <= _urunler.Count)
-            {
-                Console.WriteLine(_urunler[numara - 1].Ad + " silindi!");
-                _urunler.RemoveAt(numara - 1);
-            }
-            else
-            {
-                Console.WriteLine("Geçersiz numara!");
-            }
-        }
-        catch (FormatException)
-        {
-            Console.WriteLine("Hata: Lütfen bir sayı girin!");
-        }
+        _urunler.Remove(urun);
+        Console.WriteLine(urun.Ad + " silindi!");
     }
 
     private void UrunGuncelle()
     {
-        UrunleriListele();
-        Console.Write("Güncellemek istediğiniz ürün numarası: ");
+        Product? urun = UrunSec("Güncellemek istediğiniz ürün numarası");
+        if (urun == null)
+            return;
 
-        try
-        {
-            int numara = int.Parse(Console.ReadLine());
-            if (numara >= 1 && numara <= _urunler.Count)
-            {
-                Console.Write("Yeni ad (boş bırakırsan değişmez): ");
-                string yeniAd = Console.ReadLine();
-                if (yeniAd != "")
-                    _urunler[numara - 1].Ad = yeniAd;
+        string yeniAd = Girdi.Metin("Yeni ad (boş bırakırsan değişmez): ", bosOlabilir: true);
+        if (yeniAd != "")
+            urun.Ad = yeniAd;
 
-                Console.Write("Yeni fiyat (0 bırakırsan değişmez): ");
-                double yeniFiyat = double.Parse(Console.ReadLine());
-                if (yeniFiyat > 0)
-                    _urunler[numara - 1].Fiyat = yeniFiyat;
+        double? yeniFiyat = Girdi.SayiVeyaBos("Yeni fiyat (boş bırakırsan değişmez): ");
+        if (yeniFiyat != null)
+            urun.Fiyat = yeniFiyat.Value;
 
-                Console.WriteLine("Ürün güncellendi!");
-            }
-            else
-            {
-                Console.WriteLine("Geçersiz numara!");
-            }
-        }
-        catch (FormatException)
-        {
-            Console.WriteLine("Hata: Geçersiz giriş!");
-        }
+        Console.WriteLine("Ürün güncellendi!");
     }
 
     private void UrunAra()
     {
-        Console.Write("Aranacak kelime: ");
-        string kelime = Console.ReadLine().ToLower();
+        string kelime = Girdi.Metin("Aranacak kelime: ").ToLower();
 
         Console.WriteLine("\n=== ARAMA SONUÇLARI ===");
         bool bulundu = false;
@@ -227,10 +201,9 @@ public class Menu
 
     private void KuponKullan()
     {
-        Console.Write("Kupon kodunuz: ");
-        string kod = Console.ReadLine().ToUpper();
+        string kod = Girdi.Metin("Kupon kodunuz: ").ToUpper();
 
-        Kupon bulunanKupon = null;
+        Kupon? bulunanKupon = null;
         foreach (Kupon k in _kuponlar)
         {
             if (k.Kod == kod)
