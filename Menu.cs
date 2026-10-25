@@ -161,6 +161,8 @@ public class Menu
             return;
 
         _urunler.Remove(urun);
+        // Silinen ürün sepette kalırsa hâlâ sipariş verilebiliyordu.
+        _sepet.UrunuTamamenCikar(urun);
         Console.WriteLine(urun.Ad + " silindi!");
     }
 

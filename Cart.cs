@@ -37,6 +37,15 @@ public class Cart
         Console.WriteLine(urun.Ad + " sepetten çıkarıldı!");
     }
 
+    public void UrunuTamamenCikar(Product urun)
+    {
+        int silinen = _urunler.RemoveAll(u => u == urun);
+        if (silinen > 0)
+            Console.WriteLine(urun.Ad + " sepetinizden de çıkarıldı (" + silinen + " adet).");
+        if (_urunler.Count == 0)
+            _kupon = null;
+    }
+
     public Kupon? Kupon
     {
         get { return _kupon; }
