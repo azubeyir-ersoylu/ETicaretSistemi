@@ -1,10 +1,10 @@
 public class Kupon
 {
     private string _kod;
-    private double _indirimYuzdesi;
+    private decimal _indirimYuzdesi;
     private bool _kullanildi;
 
-    public Kupon(string kod, double indirimYuzdesi)
+    public Kupon(string kod, decimal indirimYuzdesi)
     {
         _kod = kod;
         _indirimYuzdesi = indirimYuzdesi;
@@ -16,7 +16,7 @@ public class Kupon
         get { return _kod; }
     }
 
-    public double IndirimYuzdesi
+    public decimal IndirimYuzdesi
     {
         get { return _indirimYuzdesi; }
     }
@@ -26,13 +26,16 @@ public class Kupon
         get { return _kullanildi; }
     }
 
-    public double IndirimUygula(double tutar)
+    // Sadece hesaplar, kuponu harcamaz. Kupon sipariş verilince harcanır.
+    public decimal IndirimHesapla(decimal tutar)
+    {
+        return Math.Round(tutar * _indirimYuzdesi / 100, 2);
+    }
+
+    public void Kullan()
     {
         if (_kullanildi)
-            throw new Exception("Bu kupon daha önce kullanıldı!");
-
+            throw new InvalidOperationException("Bu kupon daha önce kullanıldı!");
         _kullanildi = true;
-        double indirim = tutar * _indirimYuzdesi / 100;
-        return tutar - indirim;
     }
 }

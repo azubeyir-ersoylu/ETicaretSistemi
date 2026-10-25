@@ -1,8 +1,8 @@
 public class DijitalUrun : Product
 {
-    private string _indirmeLinki;
+    private string _indirmeLinki = "";
 
-    public DijitalUrun(string ad, double fiyat, int stok, string indirmeLinki)
+    public DijitalUrun(string ad, decimal fiyat, int stok, string indirmeLinki)
         : base(ad, fiyat, stok)
     {
         _indirmeLinki = indirmeLinki;
@@ -13,8 +13,9 @@ public class DijitalUrun : Product
         get { return _indirmeLinki; }
         set { _indirmeLinki = value; }
     }
+
     public override string BilgileriGoster()
-{
-    return "Dijital Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | İndirme: " + IndirmeLinki;
-}
+    {
+        return "Dijital Ürün: " + Ad + " | Fiyat: " + Para.Yaz(Fiyat) + " | Stok: " + Stok + " | İndirme: " + IndirmeLinki;
+    }
 }

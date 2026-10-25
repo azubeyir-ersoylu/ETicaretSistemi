@@ -1,20 +1,26 @@
 public class FizikselUrun : Product
 {
-    private double _kargoAgirligi;
+    private decimal _kargoAgirligi;
 
-    public FizikselUrun(string ad, double fiyat, int stok, double kargoAgirligi)
+    public FizikselUrun(string ad, decimal fiyat, int stok, decimal kargoAgirligi)
         : base(ad, fiyat, stok)
     {
-        _kargoAgirligi = kargoAgirligi;
+        KargoAgirligi = kargoAgirligi;
     }
 
-    public double KargoAgirligi
+    public decimal KargoAgirligi
     {
         get { return _kargoAgirligi; }
-        set { _kargoAgirligi = value; }
+        set
+        {
+            if (value < 0)
+                throw new ArgumentException("Kargo ağırlığı negatif olamaz!");
+            _kargoAgirligi = value;
+        }
     }
+
     public override string BilgileriGoster()
-{
-    return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Kargo Ağırlığı: " + KargoAgirligi + "kg";
-}
+    {
+        return "Fiziksel Ürün: " + Ad + " | Fiyat: " + Para.Yaz(Fiyat) + " | Stok: " + Stok + " | Kargo: " + KargoAgirligi + " kg";
+    }
 }

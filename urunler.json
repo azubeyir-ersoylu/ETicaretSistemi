@@ -1,20 +1,28 @@
 [
   {
+    "$type": "FizikselUrun",
+    "KargoAgirligi": 2.5,
     "Ad": "Laptop",
     "Fiyat": 15000.0,
     "Stok": 5
   },
   {
+    "$type": "FizikselUrun",
+    "KargoAgirligi": 0.3,
     "Ad": "Mouse",
     "Fiyat": 250.0,
     "Stok": 20
   },
   {
+    "$type": "DijitalUrun",
+    "IndirmeLinki": "minecraft.com/indir",
     "Ad": "Minecraft",
     "Fiyat": 200.0,
     "Stok": 999
   },
   {
+    "$type": "DijitalUrun",
+    "IndirmeLinki": "adobe.com/indir",
     "Ad": "Photoshop",
     "Fiyat": 1200.0,
     "Stok": 999
