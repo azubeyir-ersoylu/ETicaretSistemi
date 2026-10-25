@@ -192,7 +192,7 @@ public class Menu
         {
             if (urun.Ad.ToLower().Contains(kelime))
             {
-                Console.WriteLine("- " + urun.Ad + " : " + urun.Fiyat + "₺ (Stok: " + urun.Stok + ")");
+                Console.WriteLine("- " + urun.Ad + " : " + Para.Yaz(urun.Fiyat) + " (Stok: " + urun.Stok + ")");
                 bulundu = true;
             }
         }
@@ -227,7 +227,7 @@ public class Menu
         {
             _sepet.KuponUygula(bulunanKupon);
             Console.WriteLine("%" + bulunanKupon.IndirimYuzdesi + " indirim uygulandı!");
-            Console.WriteLine("Yeni toplam: " + _sepet.ToplamFiyat() + "₺");
+            Console.WriteLine("Yeni toplam: " + Para.Yaz(_sepet.ToplamFiyat()));
         }
         catch (Exception ex)
         {

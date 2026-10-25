@@ -27,10 +27,10 @@ public class Siparis
         Console.WriteLine("Tarih: " + _tarih);
         foreach ((string Ad, decimal Fiyat) kalem in _kalemler)
         {
-            Console.WriteLine("- " + kalem.Ad + " : " + kalem.Fiyat + "₺");
+            Console.WriteLine("- " + kalem.Ad + " : " + Para.Yaz(kalem.Fiyat));
         }
         if (_indirim > 0)
-            Console.WriteLine("İndirim: -" + _indirim + "₺");
-        Console.WriteLine("Toplam: " + _toplam + "₺");
+            Console.WriteLine("İndirim: -" + Para.Yaz(_indirim));
+        Console.WriteLine("Toplam: " + Para.Yaz(_toplam));
     }
 }

@@ -48,6 +48,6 @@ public class Product
 
     public virtual string BilgileriGoster()
     {
-        return "Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Stok: " + Stok;
+        return "Ürün: " + Ad + " | Fiyat: " + Para.Yaz(Fiyat) + " | Stok: " + Stok;
     }
 }

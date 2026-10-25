@@ -84,14 +84,14 @@ public class Cart
 
         foreach (Product urun in _urunler)
         {
-            Console.WriteLine("- " + urun.Ad + " : " + urun.Fiyat + "₺");
+            Console.WriteLine("- " + urun.Ad + " : " + Para.Yaz(urun.Fiyat));
         }
         if (_kupon != null)
         {
-            Console.WriteLine("Ara toplam: " + AraToplam() + "₺");
-            Console.WriteLine("Kupon " + _kupon.Kod + " (%" + _kupon.IndirimYuzdesi + "): -" + Indirim() + "₺");
+            Console.WriteLine("Ara toplam: " + Para.Yaz(AraToplam()));
+            Console.WriteLine("Kupon " + _kupon.Kod + " (%" + _kupon.IndirimYuzdesi + "): -" + Para.Yaz(Indirim()));
         }
-        Console.WriteLine("Toplam: " + ToplamFiyat() + "₺");
+        Console.WriteLine("Toplam: " + Para.Yaz(ToplamFiyat()));
     }
 
     public List<Product> Urunler()

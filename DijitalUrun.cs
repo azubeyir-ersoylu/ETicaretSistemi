@@ -16,6 +16,6 @@ public class DijitalUrun : Product
 
     public override string BilgileriGoster()
     {
-        return "Dijital Ürün: " + Ad + " | Fiyat: " + Fiyat + "₺ | Stok: " + Stok + " | İndirme: " + IndirmeLinki;
+        return "Dijital Ürün: " + Ad + " | Fiyat: " + Para.Yaz(Fiyat) + " | Stok: " + Stok + " | İndirme: " + IndirmeLinki;
     }
 }
