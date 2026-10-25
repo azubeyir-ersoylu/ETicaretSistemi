@@ -239,6 +239,21 @@ public class Menu
             return;
         }
 
+        // Sepete eklendikten sonra stok değişmiş olabilir (ör. admin
+        // güncelledi), o yüzden önce hepsini kontrol edip sonra düşüyoruz.
+        foreach (Product urun in _sepet.Urunler().Distinct())
+        {
+            if (_sepet.Adet(urun) > urun.Stok)
+            {
+                Console.WriteLine(urun.Ad + " için yeterli stok kalmadı! (Stok: " + urun.Stok + ")");
+                return;
+            }
+        }
+        foreach (Product urun in _sepet.Urunler())
+        {
+            urun.Stok--;
+        }
+
         Siparis siparis = new Siparis(_siparisNo++, _sepet.Urunler(), _sepet.ToplamFiyat());
         _siparisler.Add(siparis);
         siparis.SiparisiGoster();

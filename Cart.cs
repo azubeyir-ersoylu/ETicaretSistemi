@@ -7,14 +7,27 @@ public class Cart
         _urunler = new List<Product>();
     }
 
+    // Stok burada düşülmez, sadece kontrol edilir. Stok sipariş verilince
+    // düşer; böylece sepete eklenip satın alınmayan ürünler stoktan kaybolmaz.
     public void UrunEkle(Product urun)
     {
-        if (urun.Stok <= 0)
-            throw new Exception(urun.Ad + " stokta yok!");
+        int sepettekiAdet = Adet(urun);
+        if (sepettekiAdet >= urun.Stok)
+            throw new InvalidOperationException(urun.Ad + " için yeterli stok yok! (Stok: " + urun.Stok + ")");
 
         _urunler.Add(urun);
-        urun.Stok--;
-        Console.WriteLine(urun.Ad + " sepete eklendi! (Kalan stok: " + urun.Stok + ")");
+        Console.WriteLine(urun.Ad + " sepete eklendi! (Sepette: " + (sepettekiAdet + 1) + " adet, stok: " + urun.Stok + ")");
+    }
+
+    public int Adet(Product urun)
+    {
+        int adet = 0;
+        foreach (Product u in _urunler)
+        {
+            if (u == urun)
+                adet++;
+        }
+        return adet;
     }
 
     public void UrunCikar(Product urun)
